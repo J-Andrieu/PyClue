@@ -31,6 +31,7 @@ print(f"{x_step}, {y_step}")
 center_offset_x = 0
 center_offset_y = 0
 clock = pygame.time.Clock()
+keys = pygame.key.set_repeat(200, 400)
 run = True
 while run:
     clock.tick(60)
@@ -42,13 +43,13 @@ while run:
             # shrink the board
             x_step = x_step - 1
             y_step = y_step - 1
-            center_offset_x = center_offset_x + 1 / 2
-            center_offset_y = center_offset_y + 1 / 2
+            center_offset_x = center_offset_x + x_step / 2.0
+            center_offset_y = center_offset_y + y_step / 2.0
         elif keys[pygame.K_g]:
             x_step = x_step + 1
             y_step = y_step + 1
-            center_offset_x = center_offset_x - 1 / 2
-            center_offset_y = center_offset_y - 1 / 2
+            center_offset_x = center_offset_x - x_step / 2.0
+            center_offset_y = center_offset_y - y_step / 2.0
         elif keys[pygame.K_DOWN]:
             center_offset_y = center_offset_y + 1
         elif keys[pygame.K_UP]:
