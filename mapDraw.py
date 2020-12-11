@@ -28,6 +28,8 @@ print(f"{x_step}, {y_step}")
 #     pygame.draw.rect(buttonSurface, (0, 150, 150, 150), (ix * x_step + 1, iy * y_step + 1, x_step - 1, y_step -1))
 # screen.blit(buttonSurface, (0, 0))
 
+center_offset_x = 0
+center_offset_y = 0
 clock = pygame.time.Clock()
 run = True
 while run:
@@ -40,13 +42,25 @@ while run:
             # shrink the board
             x_step = x_step - 1
             y_step = y_step - 1
+            center_offset_x = center_offset_x + 1 / 2
+            center_offset_y = center_offset_y + 1 / 2
         elif keys[pygame.K_g]:
             x_step = x_step + 1
             y_step = y_step + 1
+            center_offset_x = center_offset_x - 1 / 2
+            center_offset_y = center_offset_y - 1 / 2
+        elif keys[pygame.K_DOWN]:
+            center_offset_y = center_offset_y + 1
+        elif keys[pygame.K_UP]:
+            center_offset_y = center_offset_y - 1
+        elif keys[pygame.K_LEFT]:
+            center_offset_x = center_offset_x - 1
+        elif keys[pygame.K_RIGHT]:
+            center_offset_x = center_offset_x + 1
 
-    buttonSurface.fill((255, 255, 255, 255))
+    buttonSurface.fill((0, 0, 0, 0))
     for ix,iy in np.ndindex(grid.shape):
-        pygame.draw.rect(buttonSurface, (0, 150, 150, 150), (ix * x_step + 1, iy * y_step + 1, x_step - 1, y_step -1))
+        pygame.draw.rect(buttonSurface, (0, 150, 150, 150), (ix * x_step + center_offset_x + 1, iy * y_step + center_offset_y + 1, x_step - 1, y_step -1))
 
     screen.blit(background, (0, 0))
     screen.blit(buttonSurface, (0, 0))
