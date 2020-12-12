@@ -8,7 +8,9 @@ class Button:
         "hallway": (0, 150, 150, 150),
         "unavailable": (0, 0, 0, 200),
         "start_position": (100, 200, 0, 150),
-        "room": (100, 0, 200, 150)
+        "room": (100, 0, 200, 150),
+        "murder_room": (255, 0, 0, 150),
+        "door": (0, 0, 255, 150)
     }
 
     def __init__(self, surface, rect, index):
@@ -37,6 +39,10 @@ class Button:
         elif self.spaceType == "start_position":
             self.spaceType = "room"
         elif self.spaceType == "room":
+            self.spaceType = "murder_room"
+        elif self.spaceType == "murder_room":
+            self.spaceType = "door"
+        elif self.spaceType == "door":
             self.spaceType = "hallway"
 
 
@@ -80,13 +86,13 @@ def updateButtonPositions():
     for i in range(len(buttonList)):
         buttonList[i].updatePosition(getButtonRect((i // gridSize[0], i % gridSize[0])))
 
-print("""
-Color Legend:
+print("""Color Legend:
     Cyan: Hallway
     Magenta: Starting Position
     Yellow: Room
     Black: Unavailable
-""")
+    Red: Crime Scene
+    Blue: Door""")
 
 run = True
 while run:
@@ -139,11 +145,9 @@ while run:
 
 # save the state of the game
 # button position, grid size, etc
-with open("board_image_data.txt") as f:
-    f.write("Button Positions, Spaces, ")
+filename = filename[0:filename.find('.')]
+with open(f"{filename}_data.txt", 'w') as f:
+    f.write(f"{gridSize[0]} {gridSize[1]}\n")
     for b in buttonList:
-        f.write([b.position, b.spaceType])
-    f.write("Grid Dimensions")
-    f.write(gridSize)
-    
+        f.write(f"{b.spaceType}\n{b.position[0]} {b.position[1]} {b.position[2]} {b.position[3]}\n")
 
