@@ -3,6 +3,7 @@
 import numpy as np
 import pygame
 import notes
+import player
 
 class GameBoard:
     class Tile:
@@ -94,7 +95,7 @@ if __name__ == "__main__":
     gameBoard = GameBoard("board_image.png")
     gameBoard.setShowTiles(True)
     my_notes = notes.Notes((gameBoard.size[0], 0))
-
+    my_player = player.Player(filename, (0, 0), gameBoard.Tile.dimensions)
     screen = pygame.display.set_mode((gameBoard.size[0] + my_notes.size[0], max(gameBoard.size[1], my_notes.size[1])), pygame.DOUBLEBUF)
 
     clock = pygame.time.Clock()
@@ -105,6 +106,8 @@ if __name__ == "__main__":
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
-        gameBoard.draw(screen)
+        surface = gameBoard.getSurface()
+        my_player.draw(surface, gameBoard)
+        screen.blit(surface, (0, 0))
         my_notes.draw(screen)
         pygame.display.flip()

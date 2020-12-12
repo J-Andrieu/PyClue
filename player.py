@@ -24,3 +24,4 @@ class Player:
 
     def addToHand(self, card):
         self.hand.append(card)
+        
