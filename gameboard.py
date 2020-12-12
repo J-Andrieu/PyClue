@@ -2,8 +2,6 @@
 # file: gameboard.py
 import numpy as np
 import pygame
-import notes
-import player
 
 class GameBoard:
     class Tile:
@@ -17,6 +15,7 @@ class GameBoard:
         }
 
         dimensions = (0.0, 0.0)
+        initialOffset = (0.0, 0.0)
 
         def __init__(self, tileType, position):
             self.type = tileType
@@ -25,6 +24,9 @@ class GameBoard:
         def draw(self, surface):
             pygame.draw.rect(surface, GameBoard.Tile.colors[self.type], self.position)
             return surface
+        
+        def canBeMovedTo(self):
+            return GameBoard.Tile.colors[self.type] != "unavailable"
 
     def __init__(self, imageFilename):
         self.showTiles = False
@@ -65,6 +67,7 @@ class GameBoard:
                 pos = tileArray[index[0], index[1]]
                 tile = GameBoard.Tile(el, pos)
                 self.tileList.append(tile)
+            GameBoard.Tile.initialOffset = (self.tileList[0].position[0], self.tileList[0].position[1])
             GameBoard.Tile.dimensions = (self.tileList[0].position[2], self.tileList[0].position[3])
 
     def _getIndex(self, twoDIndex):
@@ -88,26 +91,7 @@ class GameBoard:
     def getSurface(self):
         surface = pygame.Surface(self.size, pygame.SRCALPHA)
         return self.draw(surface)
+
+
+
             
-if __name__ == "__main__":
-    pygame.init()
-
-    gameBoard = GameBoard("board_image.png")
-    gameBoard.setShowTiles(True)
-    my_notes = notes.Notes((gameBoard.size[0], 0))
-    my_player = player.Player(filename, (0, 0), gameBoard.Tile.dimensions)
-    screen = pygame.display.set_mode((gameBoard.size[0] + my_notes.size[0], max(gameBoard.size[1], my_notes.size[1])), pygame.DOUBLEBUF)
-
-    clock = pygame.time.Clock()
-    run = True
-
-    while run:
-        clock.tick(60)
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                run = False
-        surface = gameBoard.getSurface()
-        my_player.draw(surface, gameBoard)
-        screen.blit(surface, (0, 0))
-        my_notes.draw(screen)
-        pygame.display.flip()
