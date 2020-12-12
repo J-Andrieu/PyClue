@@ -38,7 +38,7 @@ class GameBoard:
     def parse_grid_positions(self, filename):
         with open(filename, 'r') as f:
             w, h = [int(x) for x in next(f).split()]
-            gridSize = (w,h)
+            self.gridSize = (w,h)
             i = 0
             tileArray = np.zeros((w,h), dtype = (float, 4))
             tileTypeList = []
@@ -60,10 +60,10 @@ class GameBoard:
                 self.tileList.append(tile)
 
     def _getIndex(self, twoDIndex):
-        return twoDIndex[0] + self.size[0] * twoDIndex[1]
+        return twoDIndex[0] + self.gridSize[0] * twoDIndex[1]
             
     def _get2DIndex(self, index):
-        return (index // self.size[0], index % self.size[0])
+        return (index // self.gridSize[0], index % self.gridSize[0])
 
     def setShowTiles(self, val):
         self.showTiles = val
@@ -78,14 +78,11 @@ class GameBoard:
             
 if __name__ == "__main__":
     pygame.init()
-    print("Pygame initialized!")
 
     gameBoard = GameBoard("board_image.png")
     gameBoard.setShowTiles(True)
-    print("Board loaded!")
 
     screen = pygame.display.set_mode(gameBoard.size, pygame.DOUBLEBUF)
-    print("Window opened!")
 
     clock = pygame.time.Clock()
     run = True
@@ -97,6 +94,3 @@ if __name__ == "__main__":
                 run = False
         gameBoard.draw(screen)
         pygame.display.flip()
-
-    print("Aaannnnnd we're closing now")
-
