@@ -7,6 +7,7 @@ class Player:
         self.surface.blit(playerImage, (0, 0))
         self.tileDim = tileDim
         self.setPosition(position)
+        self.hand = []
 
     def draw(self, surface, board): #surface should come directly from the board? probably.
         surface.blit(self.surface, self.boardPosition)
@@ -20,3 +21,6 @@ class Player:
 
     def getPosition(self):
         return self.position
+
+    def addToHand(self, card):
+        self.hand.append(card)

@@ -2,6 +2,7 @@
 # file: gameboard.py
 import numpy as np
 import pygame
+import notes
 
 class GameBoard:
     class Tile:
@@ -92,8 +93,9 @@ if __name__ == "__main__":
 
     gameBoard = GameBoard("board_image.png")
     gameBoard.setShowTiles(True)
+    my_notes = notes.Notes((gameBoard.size[0], 0))
 
-    screen = pygame.display.set_mode(gameBoard.size, pygame.DOUBLEBUF)
+    screen = pygame.display.set_mode((gameBoard.size[0] + my_notes.size[0], max(gameBoard.size[1], my_notes.size[1])), pygame.DOUBLEBUF)
 
     clock = pygame.time.Clock()
     run = True
@@ -104,4 +106,5 @@ if __name__ == "__main__":
             if event.type == pygame.QUIT:
                 run = False
         gameBoard.draw(screen)
+        my_notes.draw(screen)
         pygame.display.flip()
