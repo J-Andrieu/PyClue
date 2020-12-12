@@ -14,12 +14,15 @@ class GameBoard:
             "door": (0, 0, 255, 150)
         }
 
+        dimensions = (0.0, 0.0)
+
         def __init__(self, tileType, position):
             self.type = tileType
             self.position = position
         
         def draw(self, surface):
             pygame.draw.rect(surface, GameBoard.Tile.colors[self.type], self.position)
+            return surface
 
     def __init__(self, imageFilename):
         self.showTiles = False
@@ -58,6 +61,7 @@ class GameBoard:
                 pos = tileArray[j // gridSize[0], j % gridSize[0]]
                 tile = GameBoard.Tile(el, pos)
                 self.tileList.append(tile)
+            GameBoard.Tile.dimensions = (self.tileList[0].position[2], self.tileList[0].position[3])
 
     def _getIndex(self, twoDIndex):
         return twoDIndex[0] + self.gridSize[0] * twoDIndex[1]
@@ -75,6 +79,11 @@ class GameBoard:
             for tile in self.tileList:
                 tile.draw(self.tileSurface)
             screen.blit(self.tileSurface, (0, 0))
+        return screen
+
+    def getSurface(self):
+        surface = pygame.Surface(self.size, pygame.SRCALPHA)
+        return self.draw(surface)
             
 if __name__ == "__main__":
     pygame.init()
