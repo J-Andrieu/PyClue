@@ -53,12 +53,14 @@ class GameBoard:
                 else:
                     j = i // 2
                     positions = [float(x) for x in line.split()]
-                    tileArray[j  // gridSize[0], j % gridSize[0]] = tuple(positions)
+                    index = self._get2DIndex(j)
+                    tileArray[index[0], index[1]] = tuple(positions)
 
             self.tileList = []
             for j in range(0, len(tileTypeList)):
                 el = tileTypeList[j]
-                pos = tileArray[j // gridSize[0], j % gridSize[0]]
+                index = self._get2DIndex(j)
+                pos = tileArray[index[0], index[1]]
                 tile = GameBoard.Tile(el, pos)
                 self.tileList.append(tile)
             GameBoard.Tile.dimensions = (self.tileList[0].position[2], self.tileList[0].position[3])
