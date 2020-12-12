@@ -28,20 +28,43 @@ class Player:
         self.hand.append(card)
         
     def moveLeft(self, gameBoard):
-        if gameBoard.tileList[gameBoard._getIndex(self.position)].canBeMovedTo():
-            self.setPosition((self.position[0]-1,self.position[1]))
+        try:
+            if gameBoard.tileList[gameBoard._getIndex((self.position[0]-1,self.position[1]))].canBeMovedTo(gameBoard.tileList[gameBoard._getIndex(self.position)]):
+                self.setPosition((self.position[0]-1,self.position[1]))
+                return True
+        except Exception as e:
+            print(f"oof: {e}")
+            return False
+        return False
     
     def moveRight(self, gameBoard):
-        if gameBoard.tileList[gameBoard._getIndex(self.position)].canBeMovedTo():
-            self.setPosition((self.position[0]+1,self.position[1]))
+        try:
+            if gameBoard.tileList[gameBoard._getIndex((self.position[0]+1,self.position[1]))].canBeMovedTo(gameBoard.tileList[gameBoard._getIndex(self.position)]):
+                self.setPosition((self.position[0]+1,self.position[1]))
+                return True
+        except Exception as e:
+            print(f"oof: {e}")
+            return False
+        return False
 
 
     def moveUp(self, gameBoard):
-        if gameBoard.tileList[gameBoard._getIndex(self.position)].canBeMovedTo():
-            self.setPosition((self.position[0],self.position[1]-1))
+        try:
+            if gameBoard.tileList[gameBoard._getIndex((self.position[0],self.position[1] - 1))].canBeMovedTo(gameBoard.tileList[gameBoard._getIndex(self.position)]):
+                self.setPosition((self.position[0],self.position[1]-1))
+                return True
+        except Exception as e:
+            print(f"oof: {e}")
+            return False
+        return False
 
-    def moveDown(self,  gameBoard):
-        if gameBoard.tileList[gameBoard._getIndex(self.position)].canBeMovedTo():
-            self.setPosition((self.position[0],self.position[1]+1))
-
+    def moveDown(self, gameBoard):
+        try:
+            if gameBoard.tileList[gameBoard._getIndex((self.position[0],self.position[1] + 1))].canBeMovedTo(gameBoard.tileList[gameBoard._getIndex(self.position)]):
+                self.setPosition((self.position[0],self.position[1]+1))
+                return True
+        except Exception as e:
+            print(f"oof: {e}")
+            return False
+        return False
         

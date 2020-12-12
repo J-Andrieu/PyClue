@@ -25,8 +25,18 @@ class GameBoard:
             pygame.draw.rect(surface, GameBoard.Tile.colors[self.type], self.position)
             return surface
         
-        def canBeMovedTo(self):
-            return GameBoard.Tile.colors[self.type] != "unavailable"
+        def canBeMovedTo(self, fromSpace):
+            if self.type != "unavailable":
+                return True
+                # if self.type == "hallway" or self.type == "start_position" or self.type == "door":
+                #     return True
+                # elif self.type == "room" or self.type == "murder_room":
+                #     if fromSpace.type == "door":
+                #         return True     
+                #     else:
+                #         return False
+            else:
+                return False
 
     def __init__(self, imageFilename):
         self.showTiles = False
