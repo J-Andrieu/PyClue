@@ -26,17 +26,10 @@ class GameBoard:
             return surface
         
         def canBeMovedTo(self, fromSpace):
-            if self.type != "unavailable":
-                return True
-                # if self.type == "hallway" or self.type == "start_position" or self.type == "door":
-                #     return True
-                # elif self.type == "room" or self.type == "murder_room":
-                #     if fromSpace.type == "door":
-                #         return True     
-                #     else:
-                #         return False
-            else:
+            print(f"from: {fromSpace.type}, to: {self.type}")
+            if self.type == "unavailable":
                 return False
+            return True
 
     def __init__(self, imageFilename):
         self.showTiles = False
@@ -81,9 +74,19 @@ class GameBoard:
             GameBoard.Tile.dimensions = (self.tileList[0].position[2], self.tileList[0].position[3])
 
     def _getIndex(self, twoDIndex):
+        if twoDIndex[0] < 0:
+            raise IndexError("Index too smol")
+        elif twoDIndex[0] >= self.gridSize[0]:
+            raise IndexError("Index too lorg :(")
+        elif twoDIndex[1] < 0:
+            raise IndexError("Index too smol")
+        elif twoDIndex[1] >= self.gridSize[1]:
+            raise IndexError("Index too lorg :(")
         return twoDIndex[0] + self.gridSize[0] * twoDIndex[1]
             
     def _get2DIndex(self, index):
+        if index < 0 or index >= self.gridSize[0] * self.gridSize[1]:
+            raise IndexError("Index too smlorg :(((")
         return (index // self.gridSize[0], index % self.gridSize[0])
 
     def setShowTiles(self, val):
