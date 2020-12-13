@@ -29,16 +29,15 @@ class Player:
         
     def moveLeft(self, gameBoard):
         try:
-            nextPos = (self.position[0] - 1, self.position[1])
+            nextPos = (self.position[1], self.position[0] - 1)
             nextPosTile = gameBoard.tileList[gameBoard._getIndex(nextPos)]
 
-            currentPos = (self.position)
+            currentPos = ((self.position[1], self.position[0]))
             currentPosTile = gameBoard.tileList[gameBoard._getIndex(currentPos)]
-            currentPosTile.type = "unavailable"
 
             #print(f"to: {nextPosTile.type}, from: {currentPosTile.type}")
             if nextPosTile.canBeMovedTo(currentPosTile):
-                self.setPosition(nextPos)
+                self.setPosition((nextPos[1], nextPos[0]))
                 return True
 
         except Exception as e:
@@ -49,32 +48,59 @@ class Player:
     
     def moveRight(self, gameBoard):
         try:
-            if gameBoard.tileList[gameBoard._getIndex((self.position[0]+1,self.position[1]))].canBeMovedTo(gameBoard.tileList[gameBoard._getIndex(self.position)]):
-                self.setPosition((self.position[0]+1,self.position[1]))
+            nextPos = (self.position[1], self.position[0] + 1)
+            nextPosTile = gameBoard.tileList[gameBoard._getIndex(nextPos)]
+
+            currentPos = ((self.position[1], self.position[0]))
+            currentPosTile = gameBoard.tileList[gameBoard._getIndex(currentPos)]
+
+            #print(f"to: {nextPosTile.type}, from: {currentPosTile.type}")
+            if nextPosTile.canBeMovedTo(currentPosTile):
+                self.setPosition((nextPos[1], nextPos[0]))
                 return True
+
         except Exception as e:
             print(f"oof: {e}")
             return False
+
         return False
 
 
     def moveUp(self, gameBoard):
         try:
-            if gameBoard.tileList[gameBoard._getIndex((self.position[0],self.position[1] - 1))].canBeMovedTo(gameBoard.tileList[gameBoard._getIndex(self.position)]):
-                self.setPosition((self.position[0],self.position[1]-1))
+            nextPos = (self.position[1] - 1, self.position[0])
+            nextPosTile = gameBoard.tileList[gameBoard._getIndex(nextPos)]
+
+            currentPos = ((self.position[1], self.position[0]))
+            currentPosTile = gameBoard.tileList[gameBoard._getIndex(currentPos)]
+
+            #print(f"to: {nextPosTile.type}, from: {currentPosTile.type}")
+            if nextPosTile.canBeMovedTo(currentPosTile):
+                self.setPosition((nextPos[1], nextPos[0]))
                 return True
+
         except Exception as e:
             print(f"oof: {e}")
             return False
+
         return False
 
     def moveDown(self, gameBoard):
         try:
-            if gameBoard.tileList[gameBoard._getIndex((self.position[0],self.position[1] + 1))].canBeMovedTo(gameBoard.tileList[gameBoard._getIndex(self.position)]):
-                self.setPosition((self.position[0],self.position[1]+1))
+            nextPos = (self.position[1] + 1, self.position[0])
+            nextPosTile = gameBoard.tileList[gameBoard._getIndex(nextPos)]
+
+            currentPos = ((self.position[1], self.position[0]))
+            currentPosTile = gameBoard.tileList[gameBoard._getIndex(currentPos)]
+
+            #print(f"to: {nextPosTile.type}, from: {currentPosTile.type}")
+            if nextPosTile.canBeMovedTo(currentPosTile):
+                self.setPosition((nextPos[1], nextPos[0]))
                 return True
+
         except Exception as e:
             print(f"oof: {e}")
             return False
+
         return False
         

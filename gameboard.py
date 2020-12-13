@@ -66,6 +66,10 @@ class GameBoard:
             self.tileList = []
             for j in range(0, len(tileTypeList)):
                 el = tileTypeList[j]
+                if el == "start_position":
+                    el = "room"
+                elif el == "room":
+                    el = "start_position"
                 index = self._get2DIndex(j)
                 pos = tileArray[index[0], index[1]]
                 tile = GameBoard.Tile(el, pos)
