@@ -26,10 +26,19 @@ class GameBoard:
             return surface
         
         def canBeMovedTo(self, fromSpace):
-            print(f"from: {fromSpace.type}, to: {self.type}")
+            #print(f"from: {fromSpace.type}, to: {self.type}")
             if self.type == "unavailable":
                 return False
+            elif self.type == "room" or self.type == "murder_room":
+                if fromSpace.type == "door" or fromSpace.type == self.type:
+                    return True
+                else:
+                    return False
+            elif self.type == "hallway" or self.type == "start_position":
+                if fromSpace.type == "room" or fromSpace.type == "murder_room":
+                    return False
             return True
+            
 
     def __init__(self, imageFilename):
         self.showTiles = False

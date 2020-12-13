@@ -1,13 +1,14 @@
 import pygame
 
 class Player:
-    def __init__(self, imageFile, position, tileDim, tileOffset): #position is per board grid, tileDim comes from GameBoard.Tile.dimensions
+    def __init__(self, imageFile, position, gameBoard): #position is per board grid, tileDim comes from GameBoard.Tile.dimensions
         playerImage = pygame.image.load(imageFile)
-        self.surface = pygame.Surface(tileDim, pygame.SRCALPHA)
+        self.surface = pygame.Surface(gameBoard.Tile.dimensions, pygame.SRCALPHA)
         self.surface.fill((0, 0, 0, 0))
-        self.surface.blit(pygame.transform.scale(playerImage, (int(tileDim[0]), int(tileDim[1]))), (0, 0))
-        self.tileDim = tileDim
-        self.initialOffset = tileOffset
+        self.surface.blit(pygame.transform.scale(playerImage, (int(gameBoard.Tile.dimensions[0]), int(gameBoard.Tile.dimensions[1]))), (0, 0))
+        self.gameBoard = gameBoard
+        self.tileDim = gameBoard.Tile.dimensions
+        self.initialOffset = gameBoard.Tile.initialOffset
         self.setPosition(position)
         self.hand = []
 
@@ -41,7 +42,7 @@ class Player:
                 return True
 
         except Exception as e:
-            print(f"oof: {e}")
+            #print(f"oof: {e}")
             return False
 
         return False
@@ -60,11 +61,14 @@ class Player:
                 return True
 
         except Exception as e:
-            print(f"oof: {e}")
+            #print(f"oof: {e}")
             return False
 
         return False
 
+    def getCurrentTile(self):
+        currentPos = ((self.position[1], self.position[0]))
+        return self.gameBoard.tileList[self.gameBoard._getIndex(currentPos)]
 
     def moveUp(self, gameBoard):
         try:
@@ -80,7 +84,7 @@ class Player:
                 return True
 
         except Exception as e:
-            print(f"oof: {e}")
+            #print(f"oof: {e}")
             return False
 
         return False
@@ -99,7 +103,7 @@ class Player:
                 return True
 
         except Exception as e:
-            print(f"oof: {e}")
+            #print(f"oof: {e}")
             return False
 
         return False
